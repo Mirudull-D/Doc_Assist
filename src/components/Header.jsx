@@ -1,5 +1,6 @@
+// src/components/Header.jsx
 import React from 'react'
-import { Bell, User, TrendingUp, TrendingDown } from 'react-feather'
+import { Bell, User } from 'react-feather'
 
 const titles = {
   dashboard: 'Dashboard',
@@ -10,18 +11,18 @@ const titles = {
 
 export default function Header({ currentPage }) {
   return (
-    <header className="bg-white shadow-sm p-4 flex justify-between items-center">
-      <h2 className="text-xl font-semibold text-gray-800">{titles[currentPage]}</h2>
+    <header className="bg-white/80 backdrop-blur shadow-sm px-4 sm:px-6 py-3 flex justify-between items-center">
+      <h2 className="text-lg sm:text-xl font-semibold text-gray-800">{titles[currentPage]}</h2>
       <div className="flex items-center space-x-4">
         <div className="relative">
           <Bell className="text-gray-500 hover:text-blue-600 cursor-pointer" />
-          <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">3</span>
+          <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] rounded-full h-4 w-4 flex items-center justify-center">3</span>
         </div>
         <div className="flex items-center space-x-2">
           <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
-            <User size={16} />
+            <User size={14} />
           </div>
-          <span className="text-sm font-medium">Dr. Smith</span>
+          <span className="hidden sm:block text-sm font-medium">Dr. Smith</span>
         </div>
       </div>
     </header>

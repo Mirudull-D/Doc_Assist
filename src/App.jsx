@@ -1,31 +1,25 @@
 import React from 'react'
 import AOS from 'aos'
-import Header from './components/Header.jsx'
-import Dashboard from './pages/Dashboard.jsx'
-import Patients from './pages/Patients.jsx'
-import Reports from './pages/Reports.jsx'
-import Upload from './pages/Upload.jsx'
-import Sidebar from "./components/SideBar.jsx";
+import TopNav from './components/TopNav'
+import Header from './components/Header'
+import Dashboard from './pages/Dashboard'
+import Patients from './pages/Patients'
+import Reports from './pages/Reports'
+import Upload from './pages/Upload'
 
 export default function App() {
   const [currentPage, setCurrentPage] = React.useState('dashboard')
-  const [sidebarOpen, setSidebarOpen] = React.useState(true)
 
   React.useEffect(() => {
     AOS.init({ once: true })
   }, [])
 
   return (
-    <div className="font-sans bg-gray-50 h-screen flex overflow-hidden">
-      <Sidebar
-        open={sidebarOpen}
-        onToggle={() => setSidebarOpen(o => !o)}
-        currentPage={currentPage}
-        onNavigate={setCurrentPage}
-      />
-      <div className="flex-1 overflow-auto">
+    <div className="font-sans bg-gray-50 min-h-dvh">
+      <TopNav currentPage={currentPage} onNavigate={setCurrentPage} />
+      <div className="max-w-7xl mx-auto">
         <Header currentPage={currentPage} />
-        <main className="p-6">
+        <main className="p-4 sm:p-6">
           {currentPage === 'dashboard' && <Dashboard />}
           {currentPage === 'patients' && <Patients />}
           {currentPage === 'reports' && <Reports />}
