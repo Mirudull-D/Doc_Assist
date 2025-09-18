@@ -1,42 +1,41 @@
 import React from 'react';
-import { Menu, X, Home, Users, FileText, Upload, Settings, LogOut, LogIn } from 'react-feather';
+import { Menu, X, Home, Users, FileText, Upload, Settings, LogOut } from 'react-feather';
+import { Link, useLocation } from 'react-router-dom';
 import clsx from 'classnames';
 
 const NAV = [
-  { key: 'dashboard', label: 'Dashboard', Icon: Home },
-  { key: 'patients', label: 'Patients', Icon: Users },
-  { key: 'reports', label: 'Reports', Icon: FileText },
-  { key: 'upload', label: 'Upload', Icon: Upload },
+  { key: 'dashboard', label: 'Dashboard', Icon: Home, path: '/dashboard' },
+  { key: 'patients', label: 'Patients', Icon: Users, path: '/patients' },
+  { key: 'reports', label: 'Reports', Icon: FileText, path: '/reports' },
+  { key: 'upload', label: 'Upload', Icon: Upload, path: '/upload' },
 ];
 
-export default function TopNav({ currentPage, onNavigate, isAuthenticated, onLogout, onLogin }) {
+export default function TopNav({ isAuthenticated, onLogout }) {
   const [open, setOpen] = React.useState(false);
+  const location = useLocation();
 
   const NavLink = ({ item, isMobile = false }) => (
-    <button
-      onClick={() => { onNavigate(item.key); setOpen(false); }}
+    <Link
+      to={item.path}
+      onClick={() => setOpen(false)}
       className={clsx(
         'w-full flex items-center gap-3 rounded-lg text-sm transition-all',
         isMobile ? 'px-3 py-2' : 'px-4 py-2.5',
-        currentPage === item.key
+        location.pathname === item.path
           ? (isMobile ? 'bg-gray-100 text-blue-700' : 'bg-blue-50 text-blue-700 font-semibold')
           : 'text-gray-700 hover:bg-gray-100'
       )}
     >
       <item.Icon size={isMobile ? 18 : 16} />
       <span>{item.label}</span>
-    </button>
+    </Link>
   );
 
   const authButton = isAuthenticated ? (
     <button onClick={onLogout} className="ml-4 rounded-lg p-2.5 text-gray-700 hover:bg-gray-100">
       <LogOut size={16} />
     </button>
-  ) : (
-    <button onClick={onLogin} className="ml-4 rounded-lg p-2.5 text-gray-700 hover:bg-gray-100">
-      <LogIn size={16} />
-    </button>
-  );
+  ) : null;
 
   const mobileMenuContent = (
     <div className="px-2 py-2">
@@ -45,9 +44,9 @@ export default function TopNav({ currentPage, onNavigate, isAuthenticated, onLog
       </div>
       <div className="border-t my-2" />
       <div className="flex flex-col gap-1">
-        {isAuthenticated && <button className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 text-sm">
+        {isAuthenticated && <Link to="/settings" className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 text-sm">
           <Settings size={18} /> <span>Settings</span>
-        </button>}
+        </Link>}
         {authButton}
       </div>
     </div>
@@ -56,14 +55,14 @@ export default function TopNav({ currentPage, onNavigate, isAuthenticated, onLog
   return (
     <nav className="sticky top-0 z-40 bg-white/90 backdrop-blur border-b">
       <div className="max-w-7xl mx-auto h-14 flex items-center justify-between px-4 sm:px-6">
-        <div className="text-xl font-bold text-blue-600">MediScan AI</div>
+        <Link to="/" className="text-xl font-bold text-blue-600">MediScan AI</Link>
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-2">
           {isAuthenticated && NAV.map(item => <NavLink key={item.key} item={item} />)}
-          {isAuthenticated && <button className="ml-4 rounded-lg p-2.5 text-gray-700 hover:bg-gray-100">
+          {isAuthenticated && <Link to="/settings" className="ml-4 rounded-lg p-2.5 text-gray-700 hover:bg-gray-100">
             <Settings size={16} />
-          </button>}
+          </Link>}
           {authButton}
         </div>
 
