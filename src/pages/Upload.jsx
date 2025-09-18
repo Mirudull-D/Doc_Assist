@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import useStore from '../store/useStore';
 import { Upload as UploadIcon, Folder, File, X, Info, Loader } from 'react-feather';
 
 export default function Upload() {
   const [files, setFiles] = useState([]);
   const [isDragging, setIsDragging] = useState(false);
-  const { uploading, uploadError, uploadSuccess, uploadFiles } = useStore();
+  const { uploading, uploadSuccess, uploadFiles } = useStore();
 
   const handleDragEnter = (e) => { e.preventDefault(); setIsDragging(true); };
   const handleDragLeave = (e) => { e.preventDefault(); setIsDragging(false); };
@@ -23,13 +23,15 @@ export default function Upload() {
     setFiles(prev => prev.filter((_, i) => i !== index));
   };
 
+  useEffect(() => {
+    if (uploadSuccess) {
+      setFiles([]);
+    }
+  }, [uploadSuccess]);
+
   const handleUpload = () => {
     if (files.length === 0) return;
-    uploadFiles(files).then(() => {
-      if (!uploadError) {
-        setFiles([]);
-      }
-    });
+    uploadFiles(files);
   };
 
   return (
@@ -59,9 +61,6 @@ export default function Upload() {
         </label>
         <p className="text-sm text-gray-500 mt-3">Supports: PDF, JPG, PNG (Max 10MB each)</p>
       </div>
-
-      {uploadError && <div className="mt-4 text-red-500 text-center p-4 bg-red-100 rounded-lg">{uploadError}</div>}
-      {uploadSuccess && <div className="mt-4 text-green-500 text-center p-4 bg-green-100 rounded-lg">Upload successful!</div>}
 
       {files.length > 0 && (
         <div className="mt-8">

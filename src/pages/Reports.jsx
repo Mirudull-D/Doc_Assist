@@ -7,7 +7,6 @@ export default function Reports() {
   const {
     reports,
     reportsLoading,
-    reportsError,
     fetchReports,
   } = useStore();
 
@@ -31,8 +30,6 @@ export default function Reports() {
            </select>
         </div>
       </div>
-
-      {reportsError && <div className="text-red-500 text-center p-4 bg-red-100 rounded-lg">{reportsError}</div>}
 
       {/* Mobile card list */}
       <div className="grid sm:hidden gap-3">

@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import useStore from '../store/useStore';
 import PatientSkeleton from '../components/skeletons/PatientSkeleton';
 import { Search, Plus, Eye, MoreVertical, User as UserIcon } from 'react-feather';
@@ -7,7 +8,6 @@ export default function Patients() {
   const {
     patients,
     patientsLoading,
-    patientsError,
     fetchPatients,
   } = useStore();
 
@@ -34,15 +34,13 @@ export default function Patients() {
         </div>
       </div>
 
-      {patientsError && <div className="text-red-500 text-center p-4 bg-red-100 rounded-lg">{patientsError}</div>}
-
       {/* Mobile card list */}
       <div className="grid sm:hidden gap-3">
         {patientsLoading ? (
           Array.from({ length: 5 }).map((_, i) => <PatientSkeleton key={i} />)
         ) : (
           patients.map(p => (
-            <div key={p.id} className="bg-white rounded-xl shadow-sm border p-4">
+            <Link to={`/patients/${p.id}`} key={p.id} className="block bg-white rounded-xl shadow-sm border p-4 hover:bg-gray-50">
               <div className="flex items-center gap-3">
                 <div className="flex-shrink-0 h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
                   <UserIcon size={16} />
@@ -62,7 +60,7 @@ export default function Patients() {
                   <span key={i} className="px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-800">{c}</span>
                 ))}
               </div>
-            </div>
+            </Link>
           ))
         )}
       </div>
@@ -97,7 +95,7 @@ export default function Patients() {
                 patients.map(patient => (
                   <tr key={patient.id} className="hover:bg-gray-50">
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
+                      <Link to={`/patients/${patient.id}`} className="flex items-center">
                         <div className="flex-shrink-0 h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
                           <UserIcon size={16} />
                         </div>
@@ -105,7 +103,7 @@ export default function Patients() {
                           <div className="text-sm font-medium text-gray-900">{patient.name}</div>
                           <div className="text-sm text-gray-500">ID: {patient.id}</div>
                         </div>
-                      </div>
+                      </Link>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm text-gray-900">{patient.age}</div>
@@ -129,8 +127,10 @@ export default function Patients() {
                       }`}>{patient.risk} Risk</span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <button className="text-blue-600 hover:text-blue-900 mr-3"><Eye size={16} /></button>
-                      <button className="text-gray-600 hover:text-gray-900"><MoreVertical size={16} /></button>
+                      <div className="flex items-center">
+                        <Link to={`/patients/${patient.id}`} className="text-blue-600 hover:text-blue-900 mr-3 flex items-center"><Eye size={16} /></Link>
+                        <button className="text-gray-600 hover:text-gray-900"><MoreVertical size={16} /></button>
+                      </div>
                     </td>
                   </tr>
                 ))
