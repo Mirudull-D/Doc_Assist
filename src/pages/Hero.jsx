@@ -1,8 +1,7 @@
-
 import React from 'react';
 import { CheckCircle, Upload, BarChart2, Shield, Database, UserCheck, PlayCircle } from 'react-feather';
 
-export default function LandingPage() {
+export default function Hero({ onLogin }) {
   return (
     <div className="bg-white text-gray-800">
       {/* Hero Section */}
@@ -13,11 +12,17 @@ export default function LandingPage() {
             Upload your medical reports and let our AI detect hidden patterns, predict risks, and provide timely insights — empowering doctors to act earlier.
           </p>
           <div className="mt-8 flex justify-center gap-4">
-            <button className="bg-primary hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg">
-              Get Started
+            <button
+              onClick={onLogin}
+              className="bg-primary hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg"
+            >
+              Login
             </button>
-            <button className="bg-white hover:bg-gray-100 text-gray-800 font-bold py-3 px-6 rounded-lg border border-gray-300 flex items-center">
-              <PlayCircle className="mr-2" size={20} /> Watch Demo
+            <button
+              onClick={onLogin} // Also logging in for now
+              className="bg-white hover:bg-gray-100 text-gray-800 font-bold py-3 px-6 rounded-lg border border-gray-300 flex items-center"
+            >
+              Sign Up
             </button>
           </div>
         </div>
@@ -109,7 +114,7 @@ export default function LandingPage() {
       <section className="bg-primary text-white text-center py-16 px-4">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold">Bring AI into your patient care workflow today.</h2>
-          <button className="mt-6 bg-white hover:bg-gray-100 text-primary font-bold py-3 px-6 rounded-lg">
+          <button onClick={onLogin} className="mt-6 bg-white hover:bg-gray-100 text-primary font-bold py-3 px-6 rounded-lg">
             Get Started Free
           </button>
         </div>
