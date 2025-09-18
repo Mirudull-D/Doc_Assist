@@ -77,55 +77,57 @@ export default function PatientPage() {
         </div>
       )}
 
-      {/* Recent Reports */}
-      {patient.recentReports && (
-        <div className="bg-white rounded-xl shadow-sm border p-6">
-            <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-semibold">Recent Reports</h3>
-                <Link to="/reports" className="text-blue-600 text-sm flex items-center">View All <ChevronRight size={16}/></Link>
-            </div>
-            <div className="space-y-3">
-            {patient.recentReports.map(report => (
-              <Link to={`/reports/${report.id}`} key={report.id} className="block p-4 rounded-lg hover:bg-gray-50 border">
-                <div className="flex items-center justify-between">
-                    <div className="flex items-center">
-                        <div className="bg-blue-100 p-2 rounded-lg mr-3"><FileText className="text-blue-600" size={16} /></div>
-                        <div>
-                            <p className="font-medium text-gray-800">{report.type}</p>
-                            <p className="text-sm text-gray-500">{report.date}</p>
-                        </div>
-                    </div>
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                        report.risk === 'High' ? 'bg-red-100 text-red-800' :
-                        report.risk === 'Medium' ? 'bg-yellow-100 text-yellow-800' :
-                        'bg-green-100 text-green-800'
-                    }`}>{report.risk} Risk</span>
-                </div>
-              </Link>
-            ))}
-          </div>
+      {/* Medications Table */}
+      <div className="bg-white rounded-xl shadow-sm border p-6">
+        <h3 className="text-lg font-semibold text-gray-700 mb-4">Medications</h3>
+        <div className="overflow-x-auto">
+          <table className="min-w-full bg-white">
+            <thead className="bg-gray-100">
+              <tr>
+                <th className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                <th className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Dosage</th>
+                <th className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Frequency</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-200">
+              {patient.medications?.map((med, index) => (
+                <tr key={index} className="hover:bg-gray-50">
+                  <td className="py-4 px-6 whitespace-nowrap">{med.name}</td>
+                  <td className="py-4 px-6 whitespace-nowrap">{med.dosage}</td>
+                  <td className="py-4 px-6 whitespace-nowrap">{med.frequency}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-      )}
+      </div>
 
-      {/* Medications */}
-      {patient.medications && (
-        <div className="bg-white rounded-xl shadow-sm border p-6">
-          <h3 className="text-lg font-semibold mb-4">Current Medications</h3>
-          <div className="divide-y divide-gray-200">
-            {patient.medications.map((med, i) => (
-              <div key={i} className="flex items-center justify-between py-3">
-                  <div className="flex items-center">
-                    <div className="bg-green-100 p-2 rounded-lg mr-3"><Tablet className="text-green-600" size={16} /></div>
-                    <div>
-                        <p className="font-medium text-gray-800">{med.name}</p>
-                        <p className="text-sm text-gray-500">{med.dosage} - {med.frequency}</p>
-                    </div>
-                  </div>
-              </div>
-            ))}
-          </div>
+      {/* Appointments Table */}
+      <div className="bg-white rounded-xl shadow-sm border p-6">
+        <h2 className="text-lg font-semibold text-gray-700 mb-4">Appointments</h2>
+        <div className="overflow-x-auto">
+          <table className="min-w-full bg-white">
+            <thead className="bg-gray-100">
+              <tr>
+                <th className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                <th className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
+                <th className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reason</th>
+                <th className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Doctor</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-200">
+              {patient.appointments?.map((appt) => (
+                <tr key={appt.id} className="hover:bg-gray-50">
+                  <td className="py-4 px-6 whitespace-nowrap">{appt.date}</td>
+                  <td className="py-4 px-6 whitespace-nowrap">{appt.time}</td>
+                  <td className="py-4 px-6 whitespace-nowrap">{appt.reason}</td>
+                  <td className="py-4 px-6 whitespace-nowrap">{appt.doctor}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-      )}
+      </div>
     </div>
   );
 }
