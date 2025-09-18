@@ -21,7 +21,7 @@ export default function Upload() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto" data-aos="fade-up">
+    <div data-aos="fade-up" className="max-w-3xl mx-auto">
       <div className="text-center mb-8">
         <h2 className="text-2xl font-bold text-gray-800 mb-2">Upload Medical Reports</h2>
         <p className="text-gray-600">Upload PDF, JPEG, or PNG files of lab reports for AI analysis</p>

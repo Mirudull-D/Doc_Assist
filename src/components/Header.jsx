@@ -1,30 +1,25 @@
-// src/components/Header.jsx
-import React from 'react'
-import { Bell, User } from 'react-feather'
+import React from 'react';
+import { Home, Users, FileText, Upload, Settings } from 'react-feather';
 
-const titles = {
-  dashboard: 'Dashboard',
-  patients: 'Patient Records',
-  reports: 'Report Analysis',
-  upload: 'Upload Reports',
-}
+const PAGE_META = {
+  dashboard: { title: 'Dashboard', Icon: Home },
+  patients: { title: 'Patients', Icon: Users },
+  reports: { title: 'Reports', Icon: FileText },
+  upload: { title: 'Upload', Icon: Upload },
+  settings: { title: 'Settings', Icon: Settings },
+  default: { title: 'Page Not Found', Icon: () => null },
+};
 
 export default function Header({ currentPage }) {
+  const pageKey = currentPage.split('/')[0];
+  const { title, Icon } = PAGE_META[pageKey] || PAGE_META.default;
+
   return (
-    <header className="bg-white/80 backdrop-blur shadow-sm px-4 sm:px-6 py-3 flex justify-between items-center">
-      <h2 className="text-lg sm:text-xl font-semibold text-gray-800">{titles[currentPage]}</h2>
-      <div className="flex items-center space-x-4">
-        <div className="relative">
-          <Bell className="text-gray-500 hover:text-blue-600 cursor-pointer" />
-          <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] rounded-full h-4 w-4 flex items-center justify-center">3</span>
-        </div>
-        <div className="flex items-center space-x-2">
-          <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
-            <User size={14} />
-          </div>
-          <span className="hidden sm:block text-sm font-medium">Dr. Smith</span>
-        </div>
+    <header className="bg-white shadow-sm border-b border-gray-100 p-4 sm:p-6">
+      <div className="flex items-center gap-3">
+        {Icon && <Icon className="text-gray-500" size={24} />}
+        <h1 className="text-2xl font-bold text-gray-800">{title}</h1>
       </div>
     </header>
-  )
+  );
 }
