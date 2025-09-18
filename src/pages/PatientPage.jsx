@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import useStore from '../store/useStore';
 import PatientPageSkeleton from '../components/skeletons/PatientPageSkeleton';
-import { User, Calendar, Droplet, Activity, FileText, Pill, ChevronRight } from 'react-feather';
+import { User, Calendar, Droplet, Activity, FileText, Tablet, ChevronRight } from 'react-feather';
 
 const InfoCard = ({ title, value, icon: Icon }) => (
   <div>
@@ -57,7 +57,7 @@ export default function PatientPage() {
         <div className="mt-6">
             <div className="text-sm text-gray-500 flex items-center mb-2"><Activity size={14} className="mr-2"/>Conditions</div>
             <div className="flex flex-wrap gap-2">
-                {patient.conditions.map((c, i) => (
+                {Array.isArray(patient.conditions) && patient.conditions.map((c, i) => (
                     <span key={i} className="px-2 py-1 text-sm rounded-full bg-gray-100 text-gray-800">{c}</span>
                 ))}
             </div>
@@ -115,7 +115,7 @@ export default function PatientPage() {
             {patient.medications.map((med, i) => (
               <div key={i} className="flex items-center justify-between py-3">
                   <div className="flex items-center">
-                    <div className="bg-green-100 p-2 rounded-lg mr-3"><Pill className="text-green-600" size={16} /></div>
+                    <div className="bg-green-100 p-2 rounded-lg mr-3"><Tablet className="text-green-600" size={16} /></div>
                     <div>
                         <p className="font-medium text-gray-800">{med.name}</p>
                         <p className="text-sm text-gray-500">{med.dosage} - {med.frequency}</p>
